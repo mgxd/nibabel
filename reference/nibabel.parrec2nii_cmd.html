@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Neuroimaging in Python &#8212; NiBabel 2.2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="processing" href="nibabel.processing.html" />
+    <link rel="prev" title="mriutils" href="nibabel.mriutils.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head>
+  <body role="document">
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.processing.html" title="processing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.mriutils.html" title="mriutils"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">parrec2nii_cmd</span></code></a><ul>
+<li><a class="reference internal" href="#error">error</a></li>
+<li><a class="reference internal" href="#get-opt-parser">get_opt_parser</a></li>
+<li><a class="reference internal" href="#main">main</a></li>
+<li><a class="reference internal" href="#proc-file">proc_file</a></li>
+<li><a class="reference internal" href="#verbose">verbose</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.mriutils.html"
+                        title="previous chapter"><code class="docutils literal"><span class="pre">mriutils</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.processing.html"
+                        title="next chapter"><code class="docutils literal"><span class="pre">processing</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.parrec2nii_cmd.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+<p><img src="../_static/reggie.png" alt="Reggie -- the one" /></p>
+
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.parrec2nii_cmd">
+<span id="parrec2nii-cmd"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">parrec2nii_cmd</span></code><a class="headerlink" href="#module-nibabel.parrec2nii_cmd" title="Permalink to this headline">¶</a></h1>
+<p>Code for PAR/REC to NIfTI converter command</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.parrec2nii_cmd.error" title="nibabel.parrec2nii_cmd.error"><code class="xref py py-obj docutils literal"><span class="pre">error</span></code></a>(msg,&nbsp;exit_code)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.parrec2nii_cmd.get_opt_parser" title="nibabel.parrec2nii_cmd.get_opt_parser"><code class="xref py py-obj docutils literal"><span class="pre">get_opt_parser</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.parrec2nii_cmd.main" title="nibabel.parrec2nii_cmd.main"><code class="xref py py-obj docutils literal"><span class="pre">main</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.parrec2nii_cmd.proc_file" title="nibabel.parrec2nii_cmd.proc_file"><code class="xref py py-obj docutils literal"><span class="pre">proc_file</span></code></a>(infile,&nbsp;opts)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.parrec2nii_cmd.verbose" title="nibabel.parrec2nii_cmd.verbose"><code class="xref py py-obj docutils literal"><span class="pre">verbose</span></code></a>(msg[,&nbsp;indent])</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="error">
+<h2>error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.parrec2nii_cmd.error">
+<code class="descclassname">nibabel.parrec2nii_cmd.</code><code class="descname">error</code><span class="sig-paren">(</span><em>msg</em>, <em>exit_code</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.parrec2nii_cmd.error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="get-opt-parser">
+<h2>get_opt_parser<a class="headerlink" href="#get-opt-parser" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.parrec2nii_cmd.get_opt_parser">
+<code class="descclassname">nibabel.parrec2nii_cmd.</code><code class="descname">get_opt_parser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.parrec2nii_cmd.get_opt_parser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="main">
+<h2>main<a class="headerlink" href="#main" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.parrec2nii_cmd.main">
+<code class="descclassname">nibabel.parrec2nii_cmd.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.parrec2nii_cmd.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="proc-file">
+<h2>proc_file<a class="headerlink" href="#proc-file" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.parrec2nii_cmd.proc_file">
+<code class="descclassname">nibabel.parrec2nii_cmd.</code><code class="descname">proc_file</code><span class="sig-paren">(</span><em>infile</em>, <em>opts</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.parrec2nii_cmd.proc_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="verbose">
+<h2>verbose<a class="headerlink" href="#verbose" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.parrec2nii_cmd.verbose">
+<code class="descclassname">nibabel.parrec2nii_cmd.</code><code class="descname">verbose</code><span class="sig-paren">(</span><em>msg</em>, <em>indent=0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.parrec2nii_cmd.verbose" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2017, Matthew Brett, Michael Hanke, Eric Larson, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+    </div>
+  </body>
+</html>

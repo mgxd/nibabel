@@ -1,0 +1,43 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`parrec2nii_cmd`
+=====================
+.. automodule:: nibabel.parrec2nii_cmd
+
+.. currentmodule:: nibabel.parrec2nii_cmd
+.. autosummary::
+
+   error
+   get_opt_parser
+   main
+   proc_file
+   verbose
+
+
+.. currentmodule:: nibabel.parrec2nii_cmd
+
+error
+~~~~~
+
+.. autofunction:: error
+
+get_opt_parser
+~~~~~~~~~~~~~~
+
+.. autofunction:: get_opt_parser
+
+main
+~~~~
+
+.. autofunction:: main
+
+proc_file
+~~~~~~~~~
+
+.. autofunction:: proc_file
+
+verbose
+~~~~~~~
+
+.. autofunction:: verbose
+

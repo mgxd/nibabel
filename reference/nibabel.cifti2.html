@@ -1,0 +1,1583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Neuroimaging in Python &#8212; NiBabel 2.2.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="checkwarns" href="nibabel.checkwarns.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head>
+  <body role="document">
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.checkwarns.html" title="checkwarns"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">cifti2</span></code></a><ul>
+<li><a class="reference internal" href="#module-nibabel.cifti2.cifti2">Module: <code class="docutils literal"><span class="pre">cifti2.cifti2</span></code></a></li>
+<li><a class="reference internal" href="#module-nibabel.cifti2.parse_cifti2">Module: <code class="docutils literal"><span class="pre">cifti2.parse_cifti2</span></code></a><ul>
+<li><a class="reference internal" href="#cifti2brainmodel"><code class="docutils literal"><span class="pre">Cifti2BrainModel</span></code></a></li>
+<li><a class="reference internal" href="#cifti2header"><code class="docutils literal"><span class="pre">Cifti2Header</span></code></a></li>
+<li><a class="reference internal" href="#cifti2headererror"><code class="docutils literal"><span class="pre">Cifti2HeaderError</span></code></a></li>
+<li><a class="reference internal" href="#cifti2image"><code class="docutils literal"><span class="pre">Cifti2Image</span></code></a></li>
+<li><a class="reference internal" href="#cifti2label"><code class="docutils literal"><span class="pre">Cifti2Label</span></code></a></li>
+<li><a class="reference internal" href="#cifti2labeltable"><code class="docutils literal"><span class="pre">Cifti2LabelTable</span></code></a></li>
+<li><a class="reference internal" href="#cifti2matrix"><code class="docutils literal"><span class="pre">Cifti2Matrix</span></code></a></li>
+<li><a class="reference internal" href="#cifti2matrixindicesmap"><code class="docutils literal"><span class="pre">Cifti2MatrixIndicesMap</span></code></a></li>
+<li><a class="reference internal" href="#cifti2metadata"><code class="docutils literal"><span class="pre">Cifti2MetaData</span></code></a></li>
+<li><a class="reference internal" href="#cifti2namedmap"><code class="docutils literal"><span class="pre">Cifti2NamedMap</span></code></a></li>
+<li><a class="reference internal" href="#cifti2parcel"><code class="docutils literal"><span class="pre">Cifti2Parcel</span></code></a></li>
+<li><a class="reference internal" href="#cifti2surface"><code class="docutils literal"><span class="pre">Cifti2Surface</span></code></a></li>
+<li><a class="reference internal" href="#cifti2transformationmatrixvoxelindicesijktoxyz"><code class="docutils literal"><span class="pre">Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ</span></code></a></li>
+<li><a class="reference internal" href="#cifti2vertexindices"><code class="docutils literal"><span class="pre">Cifti2VertexIndices</span></code></a></li>
+<li><a class="reference internal" href="#cifti2vertices"><code class="docutils literal"><span class="pre">Cifti2Vertices</span></code></a></li>
+<li><a class="reference internal" href="#cifti2volume"><code class="docutils literal"><span class="pre">Cifti2Volume</span></code></a></li>
+<li><a class="reference internal" href="#cifti2voxelindicesijk"><code class="docutils literal"><span class="pre">Cifti2VoxelIndicesIJK</span></code></a></li>
+<li><a class="reference internal" href="#load">load</a></li>
+<li><a class="reference internal" href="#save">save</a></li>
+<li><a class="reference internal" href="#cifti2extension"><code class="docutils literal"><span class="pre">Cifti2Extension</span></code></a></li>
+<li><a class="reference internal" href="#cifti2parser"><code class="docutils literal"><span class="pre">Cifti2Parser</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.checkwarns.html"
+                        title="previous chapter"><code class="docutils literal"><span class="pre">checkwarns</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.cifti2.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+<p><img src="../_static/reggie.png" alt="Reggie -- the one" /></p>
+
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.cifti2">
+<span id="cifti2"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">cifti2</span></code><a class="headerlink" href="#module-nibabel.cifti2" title="Permalink to this headline">¶</a></h1>
+<p>CIfTI format IO</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#module-nibabel.cifti2.cifti2" title="nibabel.cifti2.cifti2"><code class="xref py py-obj docutils literal"><span class="pre">cifti2</span></code></a></td>
+<td>Read / write access to CIfTI2 image format</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+<div class="section" id="module-nibabel.cifti2.cifti2">
+<span id="module-cifti2-cifti2"></span><h2>Module: <code class="xref py py-mod docutils literal"><span class="pre">cifti2.cifti2</span></code><a class="headerlink" href="#module-nibabel.cifti2.cifti2" title="Permalink to this headline">¶</a></h2>
+<p>Read / write access to CIfTI2 image format</p>
+<p>Format of the NIFTI2 container format described here:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.nitrc.org/forum/message.php?msg_id=3738">http://www.nitrc.org/forum/message.php?msg_id=3738</a></div></blockquote>
+<p>Definition of the CIFTI2 header format and file extensions attached to this
+email:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.nitrc.org/forum/forum.php?thread_id=4380&amp;forum_id=1955">http://www.nitrc.org/forum/forum.php?thread_id=4380&amp;forum_id=1955</a></div></blockquote>
+<p>Filename is <code class="docutils literal"><span class="pre">CIFTI-2_Main_FINAL_1March2014.pdf</span></code>.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2BrainModel" title="nibabel.cifti2.cifti2.Cifti2BrainModel"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2BrainModel</span></code></a>([index_offset,&nbsp;...])</td>
+<td>Element representing a mapping of the dimension to vertex or voxels.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Header" title="nibabel.cifti2.cifti2.Cifti2Header"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Header</span></code></a>([matrix,&nbsp;version])</td>
+<td>Class for CIFTI2 header extension</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2HeaderError" title="nibabel.cifti2.cifti2.Cifti2HeaderError"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2HeaderError</span></code></a></td>
+<td>Error in CIFTI2 header</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Image" title="nibabel.cifti2.cifti2.Cifti2Image"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Image</span></code></a>([dataobj,&nbsp;header,&nbsp;nifti_header,&nbsp;...])</td>
+<td>Class for single file CIFTI2 format image</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Label" title="nibabel.cifti2.cifti2.Cifti2Label"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Label</span></code></a>([key,&nbsp;label,&nbsp;red,&nbsp;green,&nbsp;blue,&nbsp;...])</td>
+<td>CIFTI2 label: association of integer key with a name and RGBA values</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2LabelTable" title="nibabel.cifti2.cifti2.Cifti2LabelTable"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2LabelTable</span></code></a>()</td>
+<td>CIFTI2 label table: a sequence of <a href="#id1"><span class="problematic" id="id2">``</span></a>Cifti2Label``s</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Matrix" title="nibabel.cifti2.cifti2.Cifti2Matrix"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Matrix</span></code></a>()</td>
+<td>CIFTI2 Matrix object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap" title="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2MatrixIndicesMap</span></code></a>(...[,&nbsp;...])</td>
+<td>Class for Matrix Indices Map</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2MetaData" title="nibabel.cifti2.cifti2.Cifti2MetaData"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2MetaData</span></code></a>([metadata])</td>
+<td>A list of name-value pairs</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2NamedMap" title="nibabel.cifti2.cifti2.Cifti2NamedMap"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2NamedMap</span></code></a>([map_name,&nbsp;metadata,&nbsp;label_table])</td>
+<td>CIFTI2 named map: association of name and optional data with a map index</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Parcel" title="nibabel.cifti2.cifti2.Cifti2Parcel"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Parcel</span></code></a>([name,&nbsp;voxel_indices_ijk,&nbsp;vertices])</td>
+<td>CIFTI2 parcel: association of a name with vertices and/or voxels</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Surface" title="nibabel.cifti2.cifti2.Cifti2Surface"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Surface</span></code></a>([brain_structure,&nbsp;...])</td>
+<td>Cifti surface: association of brain structure and number of vertices</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ" title="nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ</span></code></a>([...])</td>
+<td>Matrix that translates voxel indices to spatial coordinates</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2VertexIndices" title="nibabel.cifti2.cifti2.Cifti2VertexIndices"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2VertexIndices</span></code></a>([indices])</td>
+<td>CIFTI2 vertex indices: vertex indices for an associated brain model</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Vertices" title="nibabel.cifti2.cifti2.Cifti2Vertices"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Vertices</span></code></a>([brain_structure,&nbsp;vertices])</td>
+<td>CIFTI2 vertices - association of brain structure and a list of vertices</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Volume" title="nibabel.cifti2.cifti2.Cifti2Volume"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Volume</span></code></a>([volume_dimensions,&nbsp;...])</td>
+<td>CIFTI2 volume: information about a volume for mappings that use voxels</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK" title="nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2VoxelIndicesIJK</span></code></a>([indices])</td>
+<td>CIFTI2 VoxelIndicesIJK: Set of voxel indices contained in a structure</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.load" title="nibabel.cifti2.cifti2.load"><code class="xref py py-obj docutils literal"><span class="pre">load</span></code></a>(filename)</td>
+<td>Load cifti2 from <cite>filename</cite></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.cifti2.save" title="nibabel.cifti2.cifti2.save"><code class="xref py py-obj docutils literal"><span class="pre">save</span></code></a>(img,&nbsp;filename)</td>
+<td>Save cifti to <cite>filename</cite></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-nibabel.cifti2.parse_cifti2">
+<span id="module-cifti2-parse-cifti2"></span><h2>Module: <code class="xref py py-mod docutils literal"><span class="pre">cifti2.parse_cifti2</span></code><a class="headerlink" href="#module-nibabel.cifti2.parse_cifti2" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#nibabel.cifti2.parse_cifti2.Cifti2Extension" title="nibabel.cifti2.parse_cifti2.Cifti2Extension"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Extension</span></code></a>([code,&nbsp;content])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser" title="nibabel.cifti2.parse_cifti2.Cifti2Parser"><code class="xref py py-obj docutils literal"><span class="pre">Cifti2Parser</span></code></a>([encoding,&nbsp;buffer_size,&nbsp;verbose])</td>
+<td>Class to parse an XML string into a CIFTI2 header object</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="cifti2brainmodel">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2BrainModel" title="nibabel.cifti2.cifti2.Cifti2BrainModel"><code class="xref py py-class docutils literal"><span class="pre">Cifti2BrainModel</span></code></a><a class="headerlink" href="#cifti2brainmodel" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2BrainModel">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2BrainModel</code><span class="sig-paren">(</span><em>index_offset=None</em>, <em>index_count=None</em>, <em>model_type=None</em>, <em>brain_structure=None</em>, <em>n_surface_vertices=None</em>, <em>voxel_indices_ijk=None</em>, <em>vertex_indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2BrainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>Element representing a mapping of the dimension to vertex or voxels.</p>
+<p>Mapping to vertices of voxels must be specified.</p>
+<ul>
+<li><p class="first">Description - Maps a range of indices to surface vertices or voxels when
+IndicesMapToDataType is &#8220;CIFTI_INDEX_TYPE_BRAIN_MODELS.&#8221;</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>IndexOffset - The matrix index of the first brainordinate of this
+BrainModel. Note that matrix indices are zero-based.</li>
+<li>IndexCount - Number of surface vertices or voxels in this brain
+model, must be positive.</li>
+<li>ModelType - Type of model representing the brain structure (surface
+or voxels).  Valid values are listed in the table below.</li>
+<li>BrainStructure - Identifies the brain structure. Valid values for
+BrainStructure are listed in the table below. However, if the needed
+structure is not listed in the table, a message should be posted to
+the CIFTI Forum so that a standardized name can be created for the
+structure and added to the table.</li>
+<li>SurfaceNumberOfVertices - When ModelType is CIFTI_MODEL_TYPE_SURFACE
+this attribute contains the actual (or true) number of vertices in
+the surface that is associated with this BrainModel. When this
+BrainModel represents all vertices in the surface, this value is the
+same as IndexCount. When this BrainModel represents only a subset of
+the surface&#8217;s vertices, IndexCount will be less than this value.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>VertexIndices (0...1)</li>
+<li>VoxelIndicesIJK (0...1)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - MatrixIndicesMap</p>
+</li>
+</ul>
+<p>For ModelType values, see CIFTI_MODEL_TYPES module attribute.</p>
+<p>For BrainStructure values, see CIFTI_BRAIN_STRUCTURES model attribute.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="79%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>index_offset</td>
+<td>(int) Start of the mapping</td>
+</tr>
+<tr class="row-even"><td>index_count</td>
+<td>(int) Number of elements in the array to be mapped</td>
+</tr>
+<tr class="row-odd"><td>model_type</td>
+<td>(str) One of CIFTI_MODEL_TYPES</td>
+</tr>
+<tr class="row-even"><td>brain_structure</td>
+<td>(str) One of CIFTI_BRAIN_STRUCTURES</td>
+</tr>
+<tr class="row-odd"><td>surface_number_of_vertices</td>
+<td>(int) Number of vertices in the surface. Use only for surface-type structure</td>
+</tr>
+<tr class="row-even"><td>voxel_indices_ijk</td>
+<td>(Cifti2VoxelIndicesIJK, optional) Indices on the image towards where the array indices are mapped</td>
+</tr>
+<tr class="row-odd"><td>vertex_indices</td>
+<td>(Cifti2VertexIndices, optional) Indices of the vertices towards where the array indices are mapped</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2BrainModel.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>index_offset=None</em>, <em>index_count=None</em>, <em>model_type=None</em>, <em>brain_structure=None</em>, <em>n_surface_vertices=None</em>, <em>voxel_indices_ijk=None</em>, <em>vertex_indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2BrainModel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2BrainModel.vertex_indices">
+<code class="descname">vertex_indices</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2BrainModel.vertex_indices" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2BrainModel.voxel_indices_ijk">
+<code class="descname">voxel_indices_ijk</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2BrainModel.voxel_indices_ijk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2header">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Header" title="nibabel.cifti2.cifti2.Cifti2Header"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Header</span></code></a><a class="headerlink" href="#cifti2header" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Header">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Header</code><span class="sig-paren">(</span><em>matrix=None</em>, <em>version='2.0'</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.filebasedimages.html#nibabel.filebasedimages.FileBasedHeader" title="nibabel.filebasedimages.FileBasedHeader"><code class="xref py py-class docutils literal"><span class="pre">nibabel.filebasedimages.FileBasedHeader</span></code></a>, <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>Class for CIFTI2 header extension</p>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Header.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>matrix=None</em>, <em>version='2.0'</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Header.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Header.get_index_map">
+<code class="descname">get_index_map</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Header.get_index_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cifti2 Mapping class for a given index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>index</strong> : int</p>
+<blockquote>
+<div><p>Index for which we want to obtain the mapping.
+Must be in the mapped_indices sequence.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>cifti2_map</strong> : Cifti2MatrixIndicesMap</p>
+<blockquote class="last">
+<div><p>Returns the Cifti2MatrixIndicesMap corresponding to
+the given index.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Header.mapped_indices">
+<code class="descname">mapped_indices</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Header.mapped_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of matrix indices that are mapped</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.cifti2.cifti2.Cifti2Header.may_contain_header">
+<em class="property">classmethod </em><code class="descname">may_contain_header</code><span class="sig-paren">(</span><em>klass</em>, <em>binaryblock</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Header.may_contain_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Header.number_of_mapped_indices">
+<code class="descname">number_of_mapped_indices</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Header.number_of_mapped_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of mapped indices</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2headererror">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2HeaderError" title="nibabel.cifti2.cifti2.Cifti2HeaderError"><code class="xref py py-class docutils literal"><span class="pre">Cifti2HeaderError</span></code></a><a class="headerlink" href="#cifti2headererror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2HeaderError">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2HeaderError</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2HeaderError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">Exception</span></code></p>
+<p>Error in CIFTI2 header</p>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2HeaderError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2HeaderError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2image">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Image" title="nibabel.cifti2.cifti2.Cifti2Image"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Image</span></code></a><a class="headerlink" href="#cifti2image" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Image</code><span class="sig-paren">(</span><em>dataobj=None</em>, <em>header=None</em>, <em>nifti_header=None</em>, <em>extra=None</em>, <em>file_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.dataobj_images.html#nibabel.dataobj_images.DataobjImage" title="nibabel.dataobj_images.DataobjImage"><code class="xref py py-class docutils literal"><span class="pre">nibabel.dataobj_images.DataobjImage</span></code></a></p>
+<p>Class for single file CIFTI2 format image</p>
+<p>Initialize image</p>
+<p>The image is a combination of (dataobj, header), with optional metadata
+in <cite>nifti_header</cite> (a NIfTI2 header).  There may be more metadata in the
+mapping <cite>extra</cite>. Filename / file-like objects can also go in the
+<cite>file_map</cite> mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dataobj</strong> : object</p>
+<blockquote>
+<div><p>Object containing image data.  It should be some object that
+returns an array from <code class="docutils literal"><span class="pre">np.asanyarray</span></code>.  It should have a
+<code class="docutils literal"><span class="pre">shape</span></code> attribute or property.</p>
+</div></blockquote>
+<p><strong>header</strong> : Cifti2Header instance</p>
+<blockquote>
+<div><p>Header with data for / from XML part of CIFTI2 format.</p>
+</div></blockquote>
+<p><strong>nifti_header</strong> : None or mapping or NIfTI2 header instance, optional</p>
+<blockquote>
+<div><p>Metadata for NIfTI2 component of this format.</p>
+</div></blockquote>
+<p><strong>extra</strong> : None or mapping</p>
+<blockquote>
+<div><p>Extra metadata not captured by <cite>header</cite> or <cite>nifti_header</cite>.</p>
+</div></blockquote>
+<p><strong>file_map</strong> : mapping, optional</p>
+<blockquote class="last">
+<div><p>Mapping giving file information for this image format.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dataobj=None</em>, <em>header=None</em>, <em>nifti_header=None</em>, <em>extra=None</em>, <em>file_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize image</p>
+<p>The image is a combination of (dataobj, header), with optional metadata
+in <cite>nifti_header</cite> (a NIfTI2 header).  There may be more metadata in the
+mapping <cite>extra</cite>. Filename / file-like objects can also go in the
+<cite>file_map</cite> mapping.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dataobj</strong> : object</p>
+<blockquote>
+<div><p>Object containing image data.  It should be some object that
+returns an array from <code class="docutils literal"><span class="pre">np.asanyarray</span></code>.  It should have a
+<code class="docutils literal"><span class="pre">shape</span></code> attribute or property.</p>
+</div></blockquote>
+<p><strong>header</strong> : Cifti2Header instance</p>
+<blockquote>
+<div><p>Header with data for / from XML part of CIFTI2 format.</p>
+</div></blockquote>
+<p><strong>nifti_header</strong> : None or mapping or NIfTI2 header instance, optional</p>
+<blockquote>
+<div><p>Metadata for NIfTI2 component of this format.</p>
+</div></blockquote>
+<p><strong>extra</strong> : None or mapping</p>
+<blockquote>
+<div><p>Extra metadata not captured by <cite>header</cite> or <cite>nifti_header</cite>.</p>
+</div></blockquote>
+<p><strong>file_map</strong> : mapping, optional</p>
+<blockquote class="last">
+<div><p>Mapping giving file information for this image format.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.files_types">
+<code class="descname">files_types</code><em class="property"> = (('image', '.nii'),)</em><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.files_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.from_file_map">
+<em class="property">classmethod </em><code class="descname">from_file_map</code><span class="sig-paren">(</span><em>klass</em>, <em>file_map</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.from_file_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a CIFTI2 image from a file_map</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>file_map</strong> : file_map</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>img</strong> : Cifti2Image</p>
+<blockquote class="last">
+<div><p>Returns a Cifti2Image</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.from_image">
+<em class="property">classmethod </em><code class="descname">from_image</code><span class="sig-paren">(</span><em>klass</em>, <em>img</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.from_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method to create new instance of own class from <cite>img</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img</strong> : instance</p>
+<blockquote>
+<div><p>In fact, an object with the API of <code class="xref py py-class docutils literal"><span class="pre">DataobjImage</span></code>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>cimg</strong> : instance</p>
+<blockquote class="last">
+<div><p>Image, of our own class</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.get_data_dtype">
+<code class="descname">get_data_dtype</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.get_data_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.header_class">
+<code class="descname">header_class</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.header_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Header" title="nibabel.cifti2.cifti2.Cifti2Header"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Header</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.makeable">
+<code class="descname">makeable</code><em class="property"> = False</em><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.makeable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.nifti_header">
+<code class="descname">nifti_header</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.nifti_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.rw">
+<code class="descname">rw</code><em class="property"> = True</em><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.rw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.set_data_dtype">
+<code class="descname">set_data_dtype</code><span class="sig-paren">(</span><em>dtype</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.set_data_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.to_file_map">
+<code class="descname">to_file_map</code><span class="sig-paren">(</span><em>file_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.to_file_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write image to <cite>file_map</cite> or contained <code class="docutils literal"><span class="pre">self.file_map</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>file_map</strong> : None or mapping, optional</p>
+<blockquote>
+<div><p>files mapping.  If None (default) use object&#8217;s <code class="docutils literal"><span class="pre">file_map</span></code>
+attribute instead.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.update_headers">
+<code class="descname">update_headers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.update_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Harmonize CIFTI2 and NIfTI headers with image data</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">Cifti2Image</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">update_headers</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">nifti_header</span><span class="o">.</span><span class="n">get_data_shape</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Image.valid_exts">
+<code class="descname">valid_exts</code><em class="property"> = ('.nii',)</em><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Image.valid_exts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2label">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Label" title="nibabel.cifti2.cifti2.Cifti2Label"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Label</span></code></a><a class="headerlink" href="#cifti2label" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Label">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Label</code><span class="sig-paren">(</span><em>key=0</em>, <em>label=''</em>, <em>red=0.0</em>, <em>green=0.0</em>, <em>blue=0.0</em>, <em>alpha=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>CIFTI2 label: association of integer key with a name and RGBA values</p>
+<p>For all color components, value is floating point with range 0.0 to 1.0.</p>
+<ul>
+<li><p class="first">Description - Associates a label key value with a name and a display
+color.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>Key - Integer, data value which is assigned this name and color.</li>
+<li>Red - Red color component for label. Value is floating point with
+range 0.0 to 1.0.</li>
+<li>Green - Green color component for label. Value is floating point with
+range 0.0 to 1.0.</li>
+<li>Blue - Blue color component for label. Value is floating point with
+range 0.0 to 1.0.</li>
+<li>Alpha - Alpha color component for label. Value is floating point with
+range 0.0 to 1.0.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements: [NA]</p>
+</li>
+<li><p class="first">Text Content - Name of the label.</p>
+</li>
+<li><p class="first">Parent Element - LabelTable</p>
+</li>
+</ul>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="94%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>key</td>
+<td>(int, optional) Integer, data value which is assigned this name and color.</td>
+</tr>
+<tr class="row-even"><td>label</td>
+<td>(str, optional) Name of the label.</td>
+</tr>
+<tr class="row-odd"><td>red</td>
+<td>(float, optional) Red color component for label (between 0 and 1).</td>
+</tr>
+<tr class="row-even"><td>green</td>
+<td>(float, optional) Green color component for label (between 0 and 1).</td>
+</tr>
+<tr class="row-odd"><td>blue</td>
+<td>(float, optional) Blue color component for label (between 0 and 1).</td>
+</tr>
+<tr class="row-even"><td>alpha</td>
+<td>(float, optional) Alpha color component for label (between 0 and 1).</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Label.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>key=0</em>, <em>label=''</em>, <em>red=0.0</em>, <em>green=0.0</em>, <em>blue=0.0</em>, <em>alpha=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Label.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Label.rgba">
+<code class="descname">rgba</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Label.rgba" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns RGBA as tuple</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2labeltable">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2LabelTable" title="nibabel.cifti2.cifti2.Cifti2LabelTable"><code class="xref py py-class docutils literal"><span class="pre">Cifti2LabelTable</span></code></a><a class="headerlink" href="#cifti2labeltable" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2LabelTable">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2LabelTable</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2LabelTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableMapping</span></code></p>
+<p>CIFTI2 label table: a sequence of <a href="#id3"><span class="problematic" id="id4">``</span></a>Cifti2Label``s</p>
+<ul>
+<li><p class="first">Description - Used by NamedMap when IndicesMapToDataType is
+&#8220;CIFTI_INDEX_TYPE_LABELS&#8221; in order to associate names and display colors
+with label keys. Note that LABELS is the only mapping type that uses a
+LabelTable. Display coloring of continuous-valued data is not specified
+by CIFTI-2.</p>
+</li>
+<li><p class="first">Attributes: [NA]</p>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>Label (0...N)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - NamedMap</p>
+</li>
+</ul>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2LabelTable.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2LabelTable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2LabelTable.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2LabelTable.append" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2matrix">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Matrix" title="nibabel.cifti2.cifti2.Cifti2Matrix"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Matrix</span></code></a><a class="headerlink" href="#cifti2matrix" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Matrix">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Matrix</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSequence</span></code></p>
+<p>CIFTI2 Matrix object</p>
+<p>This is a list-like container where the elements are instances of
+<a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap" title="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap"><code class="xref py py-class docutils literal"><span class="pre">Cifti2MatrixIndicesMap</span></code></a>.</p>
+<ul>
+<li><p class="first">Description: contains child elements that describe the meaning of the
+values in the matrix.</p>
+</li>
+<li><p class="first">Attributes: [NA]</p>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>MetaData (0 .. 1)</li>
+<li>MatrixIndicesMap (1 .. N)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element: CIFTI</p>
+</li>
+</ul>
+<p>For each matrix (data) dimension, exactly one MatrixIndicesMap element must
+list it in the AppliesToMatrixDimension attribute.</p>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Matrix.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Matrix.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Matrix.get_index_map">
+<code class="descname">get_index_map</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Matrix.get_index_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cifti2 Mapping class for a given index</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>index</strong> : int</p>
+<blockquote>
+<div><p>Index for which we want to obtain the mapping.
+Must be in the mapped_indices sequence.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>cifti2_map</strong> : Cifti2MatrixIndicesMap</p>
+<blockquote class="last">
+<div><p>Returns the Cifti2MatrixIndicesMap corresponding to
+the given index.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Matrix.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Matrix.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Matrix.mapped_indices">
+<code class="descname">mapped_indices</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Matrix.mapped_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of matrix indices that are mapped</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Matrix.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Matrix.metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2matrixindicesmap">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap" title="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap"><code class="xref py py-class docutils literal"><span class="pre">Cifti2MatrixIndicesMap</span></code></a><a class="headerlink" href="#cifti2matrixindicesmap" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2MatrixIndicesMap</code><span class="sig-paren">(</span><em>applies_to_matrix_dimension</em>, <em>indices_map_to_data_type</em>, <em>number_of_series_points=None</em>, <em>series_exponent=None</em>, <em>series_start=None</em>, <em>series_step=None</em>, <em>series_unit=None</em>, <em>maps=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSequence</span></code></p>
+<p>Class for Matrix Indices Map</p>
+<ul>
+<li><p class="first">Description - Provides a mapping between matrix indices and their
+interpretation.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>AppliesToMatrixDimension - Lists the dimension(s) of the matrix to
+which this MatrixIndicesMap applies. The dimensions of the matrix
+start at zero (dimension 0 describes the indices along the first
+dimension, dimension 1 describes the indices along the second
+dimension, etc.). If this MatrixIndicesMap applies to more than one
+matrix dimension, the values are separated by a comma.</li>
+<li>IndicesMapToDataType - Type of data to which the MatrixIndicesMap
+applies.</li>
+<li>NumberOfSeriesPoints - Indicates how many samples there are in a
+series mapping type. For example, this could be the number of
+timepoints in a timeseries.</li>
+<li>SeriesExponent - Integer, SeriesStart and SeriesStep must be
+multiplied by 10 raised to the power of the value of this attribute
+to give the actual values assigned to indices (e.g., if SeriesStart
+is &#8220;5&#8221; and SeriesExponent is &#8220;-3&#8221;, the value of the first series
+point is 0.005).</li>
+<li>SeriesStart - Indicates what quantity should be assigned to the first
+series point.</li>
+<li>SeriesStep - Indicates amount of change between each series point.</li>
+<li>SeriesUnit - Indicates the unit of the result of multiplying
+SeriesStart and SeriesStep by 10 to the power of SeriesExponent.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>BrainModel (0...N)</li>
+<li>NamedMap (0...N)</li>
+<li>Parcel (0...N)</li>
+<li>Surface (0...N)</li>
+<li>Volume (0...1)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - Matrix</p>
+</li>
+</ul>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>applies_to_matrix_dimension</em>, <em>indices_map_to_data_type</em>, <em>number_of_series_points=None</em>, <em>series_exponent=None</em>, <em>series_start=None</em>, <em>series_step=None</em>, <em>series_unit=None</em>, <em>maps=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.brain_models">
+<code class="descname">brain_models</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.brain_models" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.named_maps">
+<code class="descname">named_maps</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.named_maps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.parcels">
+<code class="descname">parcels</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.parcels" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.surfaces">
+<code class="descname">surfaces</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.surfaces" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.volume">
+<code class="descname">volume</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MatrixIndicesMap.volume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2metadata">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2MetaData" title="nibabel.cifti2.cifti2.Cifti2MetaData"><code class="xref py py-class docutils literal"><span class="pre">Cifti2MetaData</span></code></a><a class="headerlink" href="#cifti2metadata" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2MetaData">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2MetaData</code><span class="sig-paren">(</span><em>metadata=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MetaData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableMapping</span></code></p>
+<p>A list of name-value pairs</p>
+<ul>
+<li><p class="first">Description - Provides a simple method for user-supplied metadata that
+associates names with values.</p>
+</li>
+<li><p class="first">Attributes: [NA]</p>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>MD (0...N)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Elements - Matrix, NamedMap</p>
+</li>
+</ul>
+<p>MD elements are a single metadata entry consisting of a name and a value.</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="88%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>data</td>
+<td>(list of (name, value) tuples)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2MetaData.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>metadata=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MetaData.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2MetaData.difference_update">
+<code class="descname">difference_update</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2MetaData.difference_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove metadata key-value pairs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>metadata</strong> : dict-like datatype</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2namedmap">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2NamedMap" title="nibabel.cifti2.cifti2.Cifti2NamedMap"><code class="xref py py-class docutils literal"><span class="pre">Cifti2NamedMap</span></code></a><a class="headerlink" href="#cifti2namedmap" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2NamedMap">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2NamedMap</code><span class="sig-paren">(</span><em>map_name=None</em>, <em>metadata=None</em>, <em>label_table=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2NamedMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>CIFTI2 named map: association of name and optional data with a map index</p>
+<p>Associates a name, optional metadata, and possibly a LabelTable with an
+index in a map.</p>
+<ul>
+<li><p class="first">Description - Associates a name, optional metadata, and possibly a
+LabelTable with an index in a map.</p>
+</li>
+<li><p class="first">Attributes: [NA]</p>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>MapName (1)</li>
+<li>LabelTable (0...1)</li>
+<li>MetaData (0...1)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - MatrixIndicesMap</p>
+</li>
+</ul>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>map_name</td>
+<td>(str) Name of map</td>
+</tr>
+<tr class="row-even"><td>metadata</td>
+<td>(None or Cifti2MetaData) Metadata associated with named map</td>
+</tr>
+<tr class="row-odd"><td>label_table</td>
+<td>(None or Cifti2LabelTable) Label table associated with named map</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2NamedMap.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>map_name=None</em>, <em>metadata=None</em>, <em>label_table=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2NamedMap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2NamedMap.label_table">
+<code class="descname">label_table</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2NamedMap.label_table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2NamedMap.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2NamedMap.metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2parcel">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Parcel" title="nibabel.cifti2.cifti2.Cifti2Parcel"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Parcel</span></code></a><a class="headerlink" href="#cifti2parcel" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Parcel">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Parcel</code><span class="sig-paren">(</span><em>name=None</em>, <em>voxel_indices_ijk=None</em>, <em>vertices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Parcel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>CIFTI2 parcel: association of a name with vertices and/or voxels</p>
+<ul>
+<li><p class="first">Description - Associates a name, plus vertices and/or voxels, with an
+index.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>Name - The name of the parcel</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>Vertices (0...N)</li>
+<li>VoxelIndicesIJK (0...1)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - MatrixIndicesMap</p>
+</li>
+</ul>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>name</td>
+<td>(str) Name of parcel</td>
+</tr>
+<tr class="row-even"><td>voxel_indices_ijk</td>
+<td>(None or Cifti2VoxelIndicesIJK) Voxel indices associated with parcel</td>
+</tr>
+<tr class="row-odd"><td>vertices</td>
+<td>(list of Cifti2Vertices) Vertices associated with parcel</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Parcel.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name=None</em>, <em>voxel_indices_ijk=None</em>, <em>vertices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Parcel.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Parcel.append_cifti_vertices">
+<code class="descname">append_cifti_vertices</code><span class="sig-paren">(</span><em>vertices</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Parcel.append_cifti_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Appends a Cifti2Vertices element to the Cifti2Parcel</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>vertices</strong> : Cifti2Vertices</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Parcel.pop_cifti2_vertices">
+<code class="descname">pop_cifti2_vertices</code><span class="sig-paren">(</span><em>ith</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Parcel.pop_cifti2_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pops the ith vertices element from the Cifti2Parcel</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.cifti2.Cifti2Parcel.voxel_indices_ijk">
+<code class="descname">voxel_indices_ijk</code><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Parcel.voxel_indices_ijk" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2surface">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Surface" title="nibabel.cifti2.cifti2.Cifti2Surface"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Surface</span></code></a><a class="headerlink" href="#cifti2surface" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Surface">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Surface</code><span class="sig-paren">(</span><em>brain_structure=None</em>, <em>surface_number_of_vertices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>Cifti surface: association of brain structure and number of vertices</p>
+<ul>
+<li><p class="first">Description - Specifies the number of vertices for a surface, when
+IndicesMapToDataType is &#8220;CIFTI_INDEX_TYPE_PARCELS.&#8221; This is separate from
+the Parcel element because there can be multiple parcels on one surface,
+and one parcel may involve multiple surfaces.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>BrainStructure - A string from the BrainStructure list to identify
+what surface structure this element refers to (usually left cortex,
+right cortex, or cerebellum).</li>
+<li>SurfaceNumberOfVertices - The number of vertices that this
+structure&#8217;s surface contains.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements: [NA]</p>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - MatrixIndicesMap</p>
+</li>
+</ul>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>brain_structure</td>
+<td>(str) Name of brain structure</td>
+</tr>
+<tr class="row-even"><td>surface_number_of_vertices</td>
+<td>(int) Number of vertices on surface</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Surface.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>brain_structure=None</em>, <em>surface_number_of_vertices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Surface.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2transformationmatrixvoxelindicesijktoxyz">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ" title="nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ"><code class="xref py py-class docutils literal"><span class="pre">Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ</span></code></a><a class="headerlink" href="#cifti2transformationmatrixvoxelindicesijktoxyz" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ</code><span class="sig-paren">(</span><em>meter_exponent=None</em>, <em>matrix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>Matrix that translates voxel indices to spatial coordinates</p>
+<ul>
+<li><p class="first">Description - Contains a matrix that translates Voxel IJK Indices to
+spatial XYZ coordinates (+X=&gt;right, +Y=&gt;anterior, +Z=&gt; superior). The
+resulting coordinate is the center of the voxel.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>MeterExponent - Integer, specifies that the coordinate result from
+the transformation matrix should be multiplied by 10 to this power to
+get the spatial coordinates in meters (e.g., if this is &#8220;-3&#8221;, then
+the transformation matrix is in millimeters).</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements: [NA]</p>
+</li>
+<li><p class="first">Text Content - Sixteen floating-point values, in row-major order, that
+form a 4x4 homogeneous transformation matrix.</p>
+</li>
+<li><p class="first">Parent Element - Volume</p>
+</li>
+</ul>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>meter_exponent</td>
+<td>(int) See attribute description above.</td>
+</tr>
+<tr class="row-even"><td>matrix</td>
+<td>(array-like shape (4, 4)) Affine transformation matrix from voxel indices to RAS space.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>meter_exponent=None</em>, <em>matrix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2vertexindices">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2VertexIndices" title="nibabel.cifti2.cifti2.Cifti2VertexIndices"><code class="xref py py-class docutils literal"><span class="pre">Cifti2VertexIndices</span></code></a><a class="headerlink" href="#cifti2vertexindices" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2VertexIndices">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2VertexIndices</code><span class="sig-paren">(</span><em>indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2VertexIndices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSequence</span></code></p>
+<p>CIFTI2 vertex indices: vertex indices for an associated brain model</p>
+<p>The vertex indices (which are independent for each surface, and
+zero-based) that are used in this brain model[.] The parent
+BrainModel&#8217;s <code class="docutils literal"><span class="pre">index_count</span></code> indicates the number of indices.</p>
+<ul class="simple">
+<li>Description - Contains a list of vertex indices for a BrainModel with
+ModelType equal to CIFTI_MODEL_TYPE_SURFACE.</li>
+<li>Attributes: [NA]</li>
+<li>Child Elements: [NA]</li>
+<li>Text Content - The vertex indices (which are independent for each
+surface, and zero-based) that are used in this brain model, with each
+index separated by a whitespace character.  The parent BrainModel&#8217;s
+IndexCount attribute indicates the number of indices in this element&#8217;s
+content.</li>
+<li>Parent Element - BrainModel</li>
+</ul>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2VertexIndices.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2VertexIndices.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2VertexIndices.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2VertexIndices.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2vertices">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Vertices" title="nibabel.cifti2.cifti2.Cifti2Vertices"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Vertices</span></code></a><a class="headerlink" href="#cifti2vertices" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Vertices">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Vertices</code><span class="sig-paren">(</span><em>brain_structure=None</em>, <em>vertices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSequence</span></code></p>
+<p>CIFTI2 vertices - association of brain structure and a list of vertices</p>
+<ul>
+<li><p class="first">Description - Contains a BrainStructure type and a list of vertex indices
+within a Parcel.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>BrainStructure - A string from the BrainStructure list to identify
+what surface this vertex list is from (usually left cortex, right
+cortex, or cerebellum).</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements: [NA]</p>
+</li>
+<li><p class="first">Text Content - Vertex indices (which are independent for each surface,
+and zero-based) separated by whitespace characters.</p>
+</li>
+<li><p class="first">Parent Element - Parcel</p>
+</li>
+</ul>
+<p>The class behaves like a list of Vertex indices (which are independent for
+each surface, and zero-based)</p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>brain_structure</td>
+<td>(str) A string from the BrainStructure list to identify what surface this vertex list is from (usually left cortex, right cortex, or cerebellum).</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Vertices.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>brain_structure=None</em>, <em>vertices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Vertices.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Vertices.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Vertices.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2volume">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2Volume" title="nibabel.cifti2.cifti2.Cifti2Volume"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Volume</span></code></a><a class="headerlink" href="#cifti2volume" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2Volume">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2Volume</code><span class="sig-paren">(</span><em>volume_dimensions=None</em>, <em>transform_matrix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Volume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>CIFTI2 volume: information about a volume for mappings that use voxels</p>
+<ul>
+<li><p class="first">Description - Provides information about the volume for any mappings that
+use voxels.</p>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><ul class="simple">
+<li>VolumeDimensions - Three integer values separated by commas, the
+lengths of the three volume file dimensions that are related to
+spatial coordinates, in number of voxels. Voxel indices (which are
+zero-based) that are used in the mapping that this element applies to
+must be within these dimensions.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Child Elements</p>
+<blockquote>
+<div><ul class="simple">
+<li>TransformationMatrixVoxelIndicesIJKtoXYZ (1)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Text Content: [NA]</p>
+</li>
+<li><p class="first">Parent Element - MatrixIndicesMap</p>
+</li>
+</ul>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>volume_dimensions</td>
+<td>(array-like shape (3,)) See attribute description above.</td>
+</tr>
+<tr class="row-even"><td>transformation_matrix_voxel_indices_ijk_to_xyz</td>
+<td>(Cifti2TransformationMatrixVoxelIndicesIJKtoXYZ) Matrix that translates voxel indices to spatial coordinates</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2Volume.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>volume_dimensions=None</em>, <em>transform_matrix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2Volume.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2voxelindicesijk">
+<h3><a class="reference internal" href="#nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK" title="nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK"><code class="xref py py-class docutils literal"><span class="pre">Cifti2VoxelIndicesIJK</span></code></a><a class="headerlink" href="#cifti2voxelindicesijk" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">Cifti2VoxelIndicesIJK</code><span class="sig-paren">(</span><em>indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a>, <code class="xref py py-class docutils literal"><span class="pre">collections.abc.MutableSequence</span></code></p>
+<p>CIFTI2 VoxelIndicesIJK: Set of voxel indices contained in a structure</p>
+<ul class="simple">
+<li>Description - Identifies the voxels that model a brain structure, or
+participate in a parcel. Note that when this is a child of BrainModel,
+the IndexCount attribute of the BrainModel indicates the number of voxels
+contained in this element.</li>
+<li>Attributes: [NA]</li>
+<li>Child Elements: [NA]</li>
+<li>Text Content - IJK indices (which are zero-based) of each voxel in this
+brain model or parcel, with each index separated by a whitespace
+character. There are three indices per voxel.  If the parent element is
+BrainModel, then the BrainModel element&#8217;s IndexCount attribute indicates
+the number of triplets (IJK indices) in this element&#8217;s content.</li>
+<li>Parent Elements - BrainModel, Parcel</li>
+</ul>
+<p>Each element of this sequence is a triple of integers.</p>
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>indices=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>index</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.Cifti2VoxelIndicesIJK.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="load">
+<h3>load<a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="nibabel.cifti2.cifti2.load">
+<code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">load</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load cifti2 from <cite>filename</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>filename of image to be loaded</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>img</strong> : Cifti2Image</p>
+<blockquote>
+<div><p>cifti image instance</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>ImageFileError: if `filename` doesn&#8217;t look like cifti</strong></p>
+<p class="last"><strong>IOError</strong> : if <cite>filename</cite> does not exist</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="save">
+<h3>save<a class="headerlink" href="#save" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="nibabel.cifti2.cifti2.save">
+<code class="descclassname">nibabel.cifti2.cifti2.</code><code class="descname">save</code><span class="sig-paren">(</span><em>img</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.cifti2.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save cifti to <cite>filename</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote class="last">
+<div><p>filename to which to save image</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2extension">
+<h3><a class="reference internal" href="#nibabel.cifti2.parse_cifti2.Cifti2Extension" title="nibabel.cifti2.parse_cifti2.Cifti2Extension"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Extension</span></code></a><a class="headerlink" href="#cifti2extension" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Extension">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.parse_cifti2.</code><code class="descname">Cifti2Extension</code><span class="sig-paren">(</span><em>code=None</em>, <em>content=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Extension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.nifti1.html#nibabel.nifti1.Nifti1Extension" title="nibabel.nifti1.Nifti1Extension"><code class="xref py py-class docutils literal"><span class="pre">nibabel.nifti1.Nifti1Extension</span></code></a></p>
+<dl class="method">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Extension.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>code=None</em>, <em>content=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Extension.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Extension.code">
+<code class="descname">code</code><em class="property"> = 32</em><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Extension.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="cifti2parser">
+<h3><a class="reference internal" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser" title="nibabel.cifti2.parse_cifti2.Cifti2Parser"><code class="xref py py-class docutils literal"><span class="pre">Cifti2Parser</span></code></a><a class="headerlink" href="#cifti2parser" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser">
+<em class="property">class </em><code class="descclassname">nibabel.cifti2.parse_cifti2.</code><code class="descname">Cifti2Parser</code><span class="sig-paren">(</span><em>encoding=None</em>, <em>buffer_size=3500000</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.xmlutils.html#nibabel.xmlutils.XmlParser" title="nibabel.xmlutils.XmlParser"><code class="xref py py-class docutils literal"><span class="pre">nibabel.xmlutils.XmlParser</span></code></a></p>
+<p>Class to parse an XML string into a CIFTI2 header object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>encoding</strong> : str</p>
+<blockquote>
+<div><p>string containing xml document</p>
+</div></blockquote>
+<p><strong>buffer_size: None or int, optional</strong></p>
+<blockquote>
+<div><p>size of read buffer. None uses default buffer_size
+from xml.parsers.expat.</p>
+</div></blockquote>
+<p><strong>verbose</strong> : int, optional</p>
+<blockquote class="last">
+<div><p>amount of output during parsing (0=silent, by default).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>encoding=None</em>, <em>buffer_size=3500000</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>encoding</strong> : str</p>
+<blockquote>
+<div><p>string containing xml document</p>
+</div></blockquote>
+<p><strong>buffer_size: None or int, optional</strong></p>
+<blockquote>
+<div><p>size of read buffer. None uses default buffer_size
+from xml.parsers.expat.</p>
+</div></blockquote>
+<p><strong>verbose</strong> : int, optional</p>
+<blockquote class="last">
+<div><p>amount of output during parsing (0=silent, by default).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser.CharacterDataHandler">
+<code class="descname">CharacterDataHandler</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser.CharacterDataHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect character data chunks pending collation</p>
+<p>The parser breaks the data up into chunks of size depending on the
+buffer_size of the parser.  A large bit of character data, with standard
+parser buffer_size (such as 8K) can easily span many calls to this
+function.  We thus collect the chunks and process them when we hit start
+or end tags.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser.EndElementHandler">
+<code class="descname">EndElementHandler</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser.EndElementHandler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser.StartElementHandler">
+<code class="descname">StartElementHandler</code><span class="sig-paren">(</span><em>name</em>, <em>attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser.StartElementHandler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser.flush_chardata">
+<code class="descname">flush_chardata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser.flush_chardata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collate and process collected character data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.cifti2.parse_cifti2.Cifti2Parser.pending_data">
+<code class="descname">pending_data</code><a class="headerlink" href="#nibabel.cifti2.parse_cifti2.Cifti2Parser.pending_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if there is character data pending for processing</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2017, Matthew Brett, Michael Hanke, Eric Larson, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+    </div>
+  </body>
+</html>
