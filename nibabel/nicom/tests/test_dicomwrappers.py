@@ -12,6 +12,7 @@ import numpy as np
 from .. import dicomwrappers as didw
 from .. import dicomreaders as didr
 from ...volumeutils import endian_codes
+from ...tests.nibabel_data import get_nibabel_data, needs_nibabel_data
 from ...pydicom_compat import (have_dicom, pydicom, read_file, dicom_test,
                                tag_for_keyword)
 
@@ -20,7 +21,6 @@ from nose.tools import (assert_true, assert_false, assert_equal,
                         assert_not_equal, assert_raises)
 
 from numpy.testing import assert_array_equal, assert_array_almost_equal
-from ...tests.nibabel_data import get_nibabel_data, needs_nibabel_data
 
 IO_DATA_PATH = pjoin(dirname(__file__), 'data')
 DATA_FILE = pjoin(IO_DATA_PATH, 'siemens_dwi_1000.dcm.gz')
