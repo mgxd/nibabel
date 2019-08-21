@@ -9,12 +9,11 @@ from copy import copy
 
 import numpy as np
 
-from nibabel.pydicom_compat import (have_dicom, pydicom, read_file, dicom_test,
-                                    tag_for_keyword)
-
 from .. import dicomwrappers as didw
 from .. import dicomreaders as didr
 from ...volumeutils import endian_codes
+from ...pydicom_compat import (have_dicom, pydicom, read_file, dicom_test,
+                               tag_for_keyword)
 
 from unittest import TestCase
 from nose.tools import (assert_true, assert_false, assert_equal,
